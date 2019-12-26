@@ -21,7 +21,6 @@ Slightly modified for the JJrobots BRAIN SHIELD July2016, updated March2017
  */
 
 #include "AccelStepper.h" // nice lib from http://www.airspayce.com/mikem/arduino/AccelStepper/
-//#include <Servo.h>
 #include "VarSpeedServo.h" 
 #include "SerialCommand.h" //nice lib from Stefan Rado, https://github.com/kroimon/Arduino-SerialCommand
 #include <avr/eeprom.h>
@@ -70,10 +69,10 @@ SerialCommand SCmd;
 // Variables... be careful, by messing around here, everything has a reason and crossrelations...
 int penMin=0;
 int penMax=0;
-int penUpPos=5;  //can be overwritten from EBB-Command SC
-int penDownPos=20; //can be overwritten from EBB-Command SC
-int servoRateUp=0; //from EBB-Protocol not implemented on machine-side
-int servoRateDown=0; //from EBB-Protocol not implemented on machine-side
+int penUpPos=45;  // corresponds to "SC,4,12000" or 25 % in EggBot Control GUI
+int penDownPos=75; // corresponds to "SC,5,16000" or 42 % in EggBot Control GUI
+int servoRateUp=100; // corresponds to "SC,11,100" or 20 %/s in EggBot Control GUI
+int servoRateDown=50; // corresponds to "SC,12,50" or 10 %/s in EggBot Control GUI
 long rotStepError=0;
 long penStepError=0;
 int penState=penUpPos;

@@ -117,13 +117,11 @@ void setPen(){
 		switch (cmd) {
 			case 0:
 				penServo.write(penUpPos,servoRateUp,false);
-        //servoStep(penUpPos);
 				penState=penUpPos;
 				break;
 
 			case 1:
 				penServo.write(penDownPos,servoRateDown,false);
-       //servoStep(penDownPos);
 				penState=penDownPos;
 				break;
 
@@ -167,11 +165,9 @@ void togglePen(){
 void doTogglePen() {
 	if (penState==penUpPos) {
 		penServo.write(penDownPos,servoRateDown,false);
-    //servoStep(penDownPos);
 		penState=penDownPos;
 	} else   {
 		penServo.write(penUpPos,servoRateUp,false);
-   //servoStep(penUpPos);
 		penState=penUpPos;
 	}
 }
