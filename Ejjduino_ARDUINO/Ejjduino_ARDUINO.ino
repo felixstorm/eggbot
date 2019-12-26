@@ -49,8 +49,11 @@ Slightly modified for the JJrobots BRAIN SHIELD July2016, updated March2017
 
 //-----------------------------------------------------------------------------------------------------------
 
-#define penUpPosEEAddress ((uint16_t *)0)
-#define penDownPosEEAddress ((uint16_t *)2)
+#define magicWordEEAddress ((uint16_t *)0)
+#define penUpPosEEAddress ((uint16_t *)2)
+#define penDownPosEEAddress ((uint16_t *)4)
+#define servoRateUpEEAddress ((uint16_t *)6)
+#define servoRateDownEEAddress ((uint16_t *)8)
 
 //make Objects
 AccelStepper rotMotor(1, step1, dir1);

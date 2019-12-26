@@ -17,8 +17,21 @@ void initHardware(){
 }
 
 inline void loadPenPosFromEE() {
-	penUpPos = eeprom_read_word(penUpPosEEAddress);
-	penDownPos = eeprom_read_word(penDownPosEEAddress);
+	if (eeprom_read_word(magicWordEEAddress) == 0x4542) // "EB"
+	{
+		penUpPos = eeprom_read_word(penUpPosEEAddress);
+		penDownPos = eeprom_read_word(penDownPosEEAddress);
+		servoRateUp = eeprom_read_word(servoRateUpEEAddress);
+		servoRateDown = eeprom_read_word(servoRateDownEEAddress);
+	}
+	else
+	{
+		storePenUpPosInEE();
+		storePenDownPosInEE();
+		storeServoRateUpInEE();
+		storeServoRateDownInEE();
+		eeprom_update_word(magicWordEEAddress, 0x4542);
+	}
 	penState = penUpPos;
 }
 
@@ -28,6 +41,14 @@ inline void storePenUpPosInEE() {
 
 inline void storePenDownPosInEE() {
 	eeprom_update_word(penDownPosEEAddress, penDownPos);
+}
+
+inline void storeServoRateUpInEE() {
+	eeprom_update_word(servoRateUpEEAddress, servoRateUp);
+}
+
+inline void storeServoRateDownInEE() {
+	eeprom_update_word(servoRateDownEEAddress, servoRateDown);
 }
 
 inline void sendAck(){

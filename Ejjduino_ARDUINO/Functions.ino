@@ -240,12 +240,16 @@ void stepperModeConfigure(){
 			case 7: //rotMax=value;    ignored
 				sendAck();
 				break;
-			case 11: servoRateUp=value;
-				 sendAck();
-				 break;
-			case 12: servoRateDown=value;
-				 sendAck();
-				 break;
+			case 11:
+				servoRateUp=value;
+				storeServoRateUpInEE();
+				sendAck();
+				break;
+			case 12:
+				servoRateDown=value;
+				storeServoRateDownInEE();
+				sendAck();
+				break;
 			default:
 				 sendError();
 		}
