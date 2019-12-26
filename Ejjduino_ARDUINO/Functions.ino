@@ -116,13 +116,13 @@ void setPen(){
 		cmd = atoi(arg);
 		switch (cmd) {
 			case 0:
-				penServo.write(penUpPos,servoRateUp,false);
-				penState=penUpPos;
+				penServo.write(penDownPos,servoRateDown,false);
+				penState=penDownPos;
 				break;
 
 			case 1:
-				penServo.write(penDownPos,servoRateDown,false);
-				penState=penDownPos;
+				penServo.write(penUpPos,servoRateUp,false);
+				penState=penUpPos;
 				break;
 
 			default:
@@ -224,12 +224,14 @@ void stepperModeConfigure(){
 		value = atoi(val);
 	if ((arg != NULL) && (val != NULL)){
 		switch (cmd) {
-			case 4: penDownPos= (int) ((float) (value-6000)/(float) 133.3); // transformation from EBB to PWM-Servo
-				storePenDownPosInEE();
+			case 4:
+				penUpPos= (int)((float) (value-6000)/(float) 133.3); // transformation from EBB to PWM-Servo
+				storePenUpPosInEE();
 				sendAck();
 				break;
-			case 5: penUpPos= (int)((float) (value-6000)/(float) 133.3); // transformation from EBB to PWM-Servo
-				storePenUpPosInEE();
+			case 5:
+				penDownPos= (int) ((float) (value-6000)/(float) 133.3); // transformation from EBB to PWM-Servo
+				storePenDownPosInEE();
 				sendAck();
 				break;
 			case 6: //rotMin=value;    ignored
