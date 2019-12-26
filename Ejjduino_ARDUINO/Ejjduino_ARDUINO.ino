@@ -26,7 +26,8 @@ Slightly modified for the JJrobots BRAIN SHIELD July2016, updated March2017
 #include <avr/eeprom.h>
 #include "button.h"
 
-#define initSting "EBBv13_and_above Protocol emulated by Eggduino-Firmware V1.6a"
+#define initString "EBBv13_and_above Protocol emulated by Eggduino-Firmware V1.6a"
+
 //Rotational Stepper:
 #define step1 3
 #define dir1 6
@@ -89,7 +90,9 @@ void setup() {
 	Serial.begin(9600);
 	makeComInterface();
 	initHardware();
- Serial.print ("hi");
+	
+	Serial.println();
+	sendVersion();
 }
 
 void loop() {

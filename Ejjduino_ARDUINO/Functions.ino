@@ -251,8 +251,12 @@ void stepperModeConfigure(){
 }
 
 void sendVersion(){
-	Serial.print(initSting);
-	Serial.print("\r\n");
+	Serial.print(F(initString));
+	Serial.print(F(" (raw values: penUpPos=")); Serial.print(penUpPos, DEC);
+	Serial.print(F(", penDownPos=")); Serial.print(penDownPos, DEC);
+	Serial.print(F(", servoRateUp=")); Serial.print(servoRateUp, DEC);
+	Serial.print(F(", servoRateDown=")); Serial.print(servoRateDown, DEC);
+	Serial.print(F(")\r\n"));
 }
 
 void unrecognized(const char *command){
