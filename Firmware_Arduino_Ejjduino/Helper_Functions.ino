@@ -1,8 +1,17 @@
+#define magicWordEE 0x4543
+#define magicWordEEAddress ((uint16_t *)0)
+#define penUpPosEEAddress ((uint16_t *)2)
+#define penDownPosEEAddress ((uint16_t *)4)
+#define servoRateUpEEAddress ((uint16_t *)6)
+#define servoRateDownEEAddress ((uint16_t *)8)
+// also save pen state for it to survive reboots caused by DTR activation on serial port being opened (apparently almost impossible to avoid especially cross platform)
+#define penStateEEAddress ((uint16_t *)10)
+
 void initHardware(){
 	// enable eeprom wait in avr/eeprom.h functions
 //	SPMCSR &= ~SELFPRGEN;
 
-	loadPenPosFromEE();
+	loadSettingsFromEE();
 
 	pinMode(enableRotMotor, OUTPUT);
 	pinMode(enablePenMotor, OUTPUT);
@@ -16,13 +25,14 @@ void initHardware(){
 	penServo.write(penState);
 }
 
-inline void loadPenPosFromEE() {
-	if (eeprom_read_word(magicWordEEAddress) == 0x4542) // "EB"
+inline void loadSettingsFromEE() {
+	if (eeprom_read_word(magicWordEEAddress) == magicWordEE)
 	{
 		penUpPos = eeprom_read_word(penUpPosEEAddress);
 		penDownPos = eeprom_read_word(penDownPosEEAddress);
 		servoRateUp = eeprom_read_word(servoRateUpEEAddress);
 		servoRateDown = eeprom_read_word(servoRateDownEEAddress);
+		penState = eeprom_read_word(penStateEEAddress);
 	}
 	else
 	{
@@ -30,9 +40,9 @@ inline void loadPenPosFromEE() {
 		storePenDownPosInEE();
 		storeServoRateUpInEE();
 		storeServoRateDownInEE();
-		eeprom_update_word(magicWordEEAddress, 0x4542);
+		storePenStateInEE();
+		eeprom_update_word(magicWordEEAddress, magicWordEE);
 	}
-	penState = penUpPos;
 }
 
 inline void storePenUpPosInEE() {
@@ -49,6 +59,10 @@ inline void storeServoRateUpInEE() {
 
 inline void storeServoRateDownInEE() {
 	eeprom_update_word(servoRateDownEEAddress, servoRateDown);
+}
+
+inline void storePenStateInEE() {
+	eeprom_update_word(penStateEEAddress, penState);
 }
 
 inline void sendAck(){

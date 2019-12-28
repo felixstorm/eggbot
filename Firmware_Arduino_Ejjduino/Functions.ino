@@ -128,6 +128,7 @@ void setPen(){
 			default:
 				sendError();
 		}
+		storePenStateInEE();
 	}
 	char *val;
 	val = SCmd.next();
@@ -170,6 +171,7 @@ void doTogglePen() {
 		penServo.write(penUpPos,servoRateUp,false);
 		penState=penUpPos;
 	}
+	storePenStateInEE();
 }
 
 void enableMotors(){
@@ -258,7 +260,8 @@ void stepperModeConfigure(){
 
 void sendVersion(){
 	Serial.print(F(initString));
-	Serial.print(F(" (raw values: penUpPos=")); Serial.print(penUpPos, DEC);
+	Serial.print(F(" (raw values: penState=")); Serial.print(penState, DEC);
+	Serial.print(F(", penUpPos=")); Serial.print(penUpPos, DEC);
 	Serial.print(F(", penDownPos=")); Serial.print(penDownPos, DEC);
 	Serial.print(F(", servoRateUp=")); Serial.print(servoRateUp, DEC);
 	Serial.print(F(", servoRateDown=")); Serial.print(servoRateDown, DEC);

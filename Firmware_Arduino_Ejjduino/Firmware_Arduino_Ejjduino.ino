@@ -49,12 +49,6 @@ Slightly modified for the JJrobots BRAIN SHIELD July2016, updated March2017
 
 //-----------------------------------------------------------------------------------------------------------
 
-#define magicWordEEAddress ((uint16_t *)0)
-#define penUpPosEEAddress ((uint16_t *)2)
-#define penDownPosEEAddress ((uint16_t *)4)
-#define servoRateUpEEAddress ((uint16_t *)6)
-#define servoRateDownEEAddress ((uint16_t *)8)
-
 //make Objects
 AccelStepper rotMotor(1, step1, dir1);
 AccelStepper penMotor(1, step2, dir2);
@@ -93,9 +87,6 @@ void setup() {
 	Serial.begin(9600);
 	makeComInterface();
 	initHardware();
-	
-	Serial.println();
-	sendVersion();
 }
 
 void loop() {
