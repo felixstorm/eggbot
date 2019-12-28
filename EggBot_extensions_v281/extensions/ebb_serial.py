@@ -64,7 +64,7 @@ def findPort():
                 break  # stop searching-- we are done.
         if ebb_port is None:
             for port in com_ports_list:
-                if port[2].startswith("USB VID:PID=04D8:FD92"):
+                if port[2].startswith("USB VID:PID=04D8:FD92") or port[2].startswith("USB VID:PID=2341"):  # 2341 => Arduino SA
                     ebb_port = port[0]  # Success; EBB found by VID/PID match.
                     break  # stop searching-- we are done.
         return ebb_port
@@ -280,7 +280,7 @@ def testPort(port_name):
     """
     if port_name is not None:
         try:
-            serial_port = serial.Serial(port_name, timeout=1.0)  # 1 second timeout!
+            serial_port = serial.Serial(port_name, timeout=2.0)  # Arduino_Ejjduino needs not only 1 but 2 seconds timeout
 
             serial_port.flushInput()  # deprecated function name;
             # use serial_port.reset_input_buffer()
